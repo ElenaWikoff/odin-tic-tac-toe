@@ -1,19 +1,21 @@
 /**
- * A 3x3 grid of cells for Tic Tac Toe.
- * @param {object} cell 
+ * A gameboard grid.
+ * @param {[*]} board Initial board array
  * @returns game board object
  */
-export default function GameBoard(cell) {
-    const validCoord = [0, 1, 2];
-    const _board = [[cell(), cell(), cell()], [cell(), cell(), cell()], [cell(), cell(), cell()]];
+export default function GameBoard(board) {
+    if (!Array.isArray(board)) {
+        throw new Error(`'board' must be an array`);
+    }
+    const _board = board;
 
     const _validateCoordinates = (row, col) => {
         let valid = true;
-        if (validCoord.includes(row)) {
+        if (row < 0 || row > board.length) {
             valid = false;
             console.error(`Invalid row, ${row} !== ${validCoord.join(" | ")}`);
         }
-        if (validCoord.includes(col)) {
+        if (col < 0 || col > board[0].length) {
             valid = false;
             console.error(`Invalid col, ${col} !== ${validCoord.join(" | ")}`);
         }
@@ -30,7 +32,7 @@ export default function GameBoard(cell) {
         }
     }
 
-    const clear = () => _board = [[cell(), cell(), cell()], [cell(), cell(), cell()], [cell(), cell(), cell()]];
+    const clear = () => _board = board;
 
     return { getCell, clear };
 }
