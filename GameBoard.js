@@ -34,5 +34,5 @@ export default function GameBoard(board) {
 
     const clear = () => _board = board;
 
-    return { getCell, clear };
+    return { _board, getCell, clear };
 }
