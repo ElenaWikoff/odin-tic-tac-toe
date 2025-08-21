@@ -3,14 +3,27 @@
  * @param {*} cell Object to populate board grid with
  * @param {number} rows Number of rows on board
  * @param {number} cols Number of columns on board
+ * @param {[*]} args Arguments to pass to cell object
  * @returns game board object
  */
-export default function GameBoard(cell, rows = 3, cols = 3) {
+export default function GameBoard(cell, rows = 3, cols = 3, ...args) {
     if (rows < 1 && cols < 1) {
         throw new Error(`Game board must have at least 1 row and 1 column`);
     }
     // Constructor/Initializer
-    const _init = () =>  Array.from({ length: rows }, () => new Array(cols).fill({...cell}));
+    const _init = () =>  {
+        const board = Array.from({ length: rows }, () => []);
+        board.forEach((row) => {
+            for (let i = 0; i < cols; i++) {
+                if (typeof cell === "function") {
+                    row.push(cell(...args));
+                } else {
+                    row.push(cell);
+                }
+            }
+        });
+        return board;
+    }
     // Game board matrix of size: rows x cols.
     const _board = _init();
 
@@ -62,7 +75,11 @@ export default function GameBoard(cell, rows = 3, cols = 3) {
     /**
      * @returns String of game board.
      */
-    const toString = () => "" + _board;
+    const toString = () => {
+        let output = "";
+        _board.forEach((row) => output += row.join(" | ") + "\n");
+        return output;
+    };
 
     return { getCell, getBoard, clear, toString };
 }
