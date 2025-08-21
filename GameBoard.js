@@ -1,13 +1,16 @@
 /**
  * A gameboard grid.
- * @param {[*]} board Initial board array
+ * @param {*} cell Object to populate board grid with
+ * @param {number} rows Number of rows on board
+ * @param {number} cols Number of columns on board
  * @returns game board object
  */
-export default function GameBoard(board) {
+export default function GameBoard(cell, rows = 3, cols = 3) {
     if (!Array.isArray(board)) {
         throw new Error(`'board' must be an array`);
     }
-    const _board = board;
+    const _init = () =>  Array.from({ length: rows }, () => new Array(cols).fill({...cell}));
+    const _board = _init();
 
     const _validateCoordinates = (row, col) => {
         let valid = true;
@@ -32,7 +35,9 @@ export default function GameBoard(board) {
         }
     }
 
-    const clear = () => _board = board;
+    const getBoard = () => _board.map((row) => [...row]);
 
-    return { _board, getCell, clear };
+    const clear = () => _board = _init();
+
+    return { getCell, getBoard, clear };
 }
