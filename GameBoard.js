@@ -6,25 +6,39 @@
  * @returns game board object
  */
 export default function GameBoard(cell, rows = 3, cols = 3) {
-    if (!Array.isArray(board)) {
-        throw new Error(`'board' must be an array`);
+    if (rows < 1 && cols < 1) {
+        throw new Error(`Game board must have at least 1 row and 1 column`);
     }
+    // Constructor/Initializer
     const _init = () =>  Array.from({ length: rows }, () => new Array(cols).fill({...cell}));
+    // Game board matrix of size: rows x cols.
     const _board = _init();
 
+    /**
+     * Internal method to validate that provided rows and columns fit _board size.
+     * @param {number} row 
+     * @param {number} col 
+     * @returns True if coordinates within board bounds, false otherwise.
+     */
     const _validateCoordinates = (row, col) => {
         let valid = true;
-        if (row < 0 || row > board.length) {
+        if (row < 0 || row > _board.length) {
             valid = false;
-            console.error(`Invalid row, ${row} !== ${validCoord.join(" | ")}`);
+            console.error(`Invalid row: ${row}, 0 <= row < ${_board.length}`);
         }
-        if (col < 0 || col > board[0].length) {
+        if (col < 0 || col > _board[0].length) {
             valid = false;
             console.error(`Invalid col, ${col} !== ${validCoord.join(" | ")}`);
         }
         return valid;
     }
 
+    /**
+     * Return object in game board at (row, col).
+     * @param {number} row 
+     * @param {number} col 
+     * @returns Object
+     */
     const getCell = (row, col) => {
         // Validate that row and col are in bounds of board
         if (!_validateCoordinates()) {
@@ -35,9 +49,20 @@ export default function GameBoard(cell, rows = 3, cols = 3) {
         }
     }
 
+    /**
+     * @returns Copy of game board.
+     */
     const getBoard = () => _board.map((row) => [...row]);
 
+    /**
+     * Reinitializes gameboard.
+     */
     const clear = () => _board = _init();
 
-    return { getCell, getBoard, clear };
+    /**
+     * @returns String of game board.
+     */
+    const toString = () => "" + _board;
+
+    return { getCell, getBoard, clear, toString };
 }
