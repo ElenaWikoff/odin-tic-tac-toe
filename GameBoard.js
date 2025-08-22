@@ -81,5 +81,5 @@ export default function GameBoard(cell, rows = 3, cols = 3, ...args) {
         return output;
     };
 
-    return { getCell, getBoard, clear, toString };
+    return { rows, cols, getCell, getBoard, clear, toString };
 }
