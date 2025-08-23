@@ -1,0 +1,83 @@
+:root {
+    --x-color: #2080f9;
+    --o-color: #e4624a;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.container {
+    padding: 30px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.container h1 {
+    text-align: center;
+}
+
+.message {
+    font-size: 2.5rem;
+}
+
+.message .xo {
+    font-weight: bold;
+}
+
+.game-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+}
+
+.board>.cell {
+    cursor: pointer;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    line-height: 1em;
+    font-weight: bold;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.board>.cell:not(:nth-child(3n)) {
+    border-right: 3px solid black;
+}
+
+.board>.cell:not(:nth-last-child(-n + 3)) {
+    border-bottom: 3px solid black;
+}
+
+[data-value="✕"] {
+    color: var(--x-color);
+}
+
+[data-value="◯"] {
+    color: var(--o-color);
+}
+
+.board>.cell>.xo {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.1s ease;
+}
+
+.board>.cell:hover>.xo {
+    opacity: 0.25;
+}
