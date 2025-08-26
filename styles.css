@@ -115,6 +115,8 @@ body {
     content: "" !important;
 }
 
+[data-state="✕"] .board,
+[data-state="◯"] .board,
 [data-state="draw"] .board {
     pointer-events: none;
 }
