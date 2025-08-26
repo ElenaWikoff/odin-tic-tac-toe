@@ -4,6 +4,9 @@ import GameBoard from "./GameBoard.js";
 const x = "✕";
 const o = "◯";
 
+/**
+ * Tic Tac Toe Game implementation
+ */
 const gamestate = (function () {
     const _gameboard = GameBoard(Cell, 3, 3);
     const _states = ["", x, o, "draw"]
@@ -111,6 +114,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const _board = document.createElement("div");
         const _cells = [];
 
+        /**
+         * Reset .cell element
+         * @param {DOM Element} cell 
+         */
         const _resetCell = (cell) => {
             cell.classList.remove("marked");
             cell.dataset.value = x;
@@ -119,20 +126,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
             xo.textContent = x;
         }
 
+        /**
+         * Reset tic tac toe board
+         */
         const reset = () => {
             _container.querySelectorAll(".cell").forEach((cell) => _resetCell(cell));
         }
 
-        const _mark = (mark, row, col) => {
-            _container.querySelectorAll(".cell").forEach((cell) => {
-                if (cell.dataset.row == row && cell.dataset.col == col) {
-                    console.log(cell);
-                    cell.dataset.value = mark;
-                    cell.classList.add("marked");
-                }
-            });
-        }
-
+        /**
+         * Sets message above board based on game state: keep playing, win or draw.
+         * @param {string} state "" | "✕" | "◯" | "draw"
+         */
         const setMessage = (state) => {
             let message = "";
             switch (state) {
@@ -145,6 +149,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
             _message.textContent = message;
         }
 
+        /**
+         * Render a gamestate object to the DOM.
+         * @param {Object} gamestate 
+         */
         const render = (gamestate) => {
             // Set game state values
             _container.dataset.state = gamestate.getState();
@@ -164,7 +172,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
         }
 
-        // Initialize values for game board
+        /**
+         * Initialize values for game board based on gamestate.
+         * @param {Object} gamestate 
+         */
         const init = (gamestate) => {
             // Add message to game container
             _message.classList.add("message");
