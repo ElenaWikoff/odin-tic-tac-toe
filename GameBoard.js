@@ -25,7 +25,7 @@ export default function GameBoard(cell, rows = 3, cols = 3, ...args) {
         return board;
     }
     // Game board matrix of size: rows x cols.
-    const _board = _init();
+    let _board = _init();
 
     /**
      * Internal method to validate that provided rows and columns fit _board size.

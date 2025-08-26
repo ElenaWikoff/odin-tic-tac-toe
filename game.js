@@ -79,6 +79,7 @@ const gamestate = (function () {
     const getCurrentPlayer = () => _players[_currPlayer];
 
     const reset = () => {
+        _state = 0;
         _currPlayer = 0;
         _gameboard.clear();
     }
@@ -113,6 +114,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const _message = document.createElement("p");
         const _board = document.createElement("div");
         const _cells = [];
+        const _resetButton = document.createElement("button");
 
         /**
          * Reset .cell element
@@ -121,9 +123,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const _resetCell = (cell) => {
             cell.classList.remove("marked");
             cell.dataset.value = x;
-
-            const xo = cell.querySelector("xo");
-            xo.textContent = x;
+            _container.dataset.state = "";
+            _container.dataset.turn = x;
         }
 
         /**
@@ -208,8 +209,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
 
-            // Add board to game container
+            // Initialize reset game button
+            _resetButton.setAttribute("type", "reset");
+            _resetButton.classList.add("btn");
+            _resetButton.classList.add("btn-reset");
+            _resetButton.textContent = "Reset";
+            _resetButton.addEventListener("click", (e) => {
+                console.log("Reset Game");
+                gamestate.reset();
+                reset();
+                render(gamestate);
+            });
+
+            // Add board and reset button to game container
             _container.appendChild(_board);
+            _container.appendChild(_resetButton);
         }
 
         return { init, render, reset };
